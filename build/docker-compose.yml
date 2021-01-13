@@ -1,0 +1,28 @@
+---
+version: "3.7"
+
+services:
+  app:
+    build:
+      context: .
+      target: base
+    tty: true
+    environment:
+      RMDB_HOST: db
+    ports:
+      - 5003:5003
+    depends_on:
+      - db
+    links:
+      - db
+
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: example
+      MYSQL_DATABASE: names
+      MYSQL_ROOT_PASSWORD: mypassword
+    ports:
+      - 3306:3306
