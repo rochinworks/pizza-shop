@@ -25,3 +25,4 @@ jobs:
           description : Name of the Elastic beanstalk Environment
         AWS-REGION: us-east-2
           description : Enter the Region
+
