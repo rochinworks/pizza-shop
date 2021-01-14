@@ -8,7 +8,7 @@ services:
       target: base
     tty: true
     environment:
-      RMDB_HOST: db
+      PG_HOST: db
     ports:
       - 5003:5003
     depends_on:
@@ -17,12 +17,12 @@ services:
       - db
 
   db:
-    image: mysql
+    image: postgres
     restart: always
     environment:
-      MYSQL_USER: mysql
-      MYSQL_PASSWORD: example
-      MYSQL_DATABASE: names
-      MYSQL_ROOT_PASSWORD: mypassword
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: tovala
+      POSTGRES_HOST: localhost
     ports:
-      - 3306:3306
+      - 5432:5432

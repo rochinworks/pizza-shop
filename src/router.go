@@ -1,15 +1,11 @@
 package main
 
 import (
-	"go-web-api/src/handler"
-
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 )
 
-func httpRouter() chi.Router {
-
-	handler := handler.NewHandler()
+func httpRouter(handler Handler) chi.Router {
 
 	// chi router is easy to use and lightweight
 	r := chi.NewRouter()
