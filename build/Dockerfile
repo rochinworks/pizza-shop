@@ -1,4 +1,4 @@
-FROM golang:1.13 as base
+FROM golang:1.15 as base
 
 #Install gomock (mockgen) for mocking interfaces
 RUN go get github.com/golang/mock/mockgen
