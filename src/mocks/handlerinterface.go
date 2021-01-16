@@ -46,3 +46,45 @@ func (mr *MockHandlerMockRecorder) BaseHandler() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BaseHandler", reflect.TypeOf((*MockHandler)(nil).BaseHandler))
 }
+
+// AddUserHandler mocks base method
+func (m *MockHandler) AddUserHandler() http.HandlerFunc {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddUserHandler")
+	ret0, _ := ret[0].(http.HandlerFunc)
+	return ret0
+}
+
+// AddUserHandler indicates an expected call of AddUserHandler
+func (mr *MockHandlerMockRecorder) AddUserHandler() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddUserHandler", reflect.TypeOf((*MockHandler)(nil).AddUserHandler))
+}
+
+// PizzaHandler mocks base method
+func (m *MockHandler) PizzaHandler() http.HandlerFunc {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "PizzaHandler")
+	ret0, _ := ret[0].(http.HandlerFunc)
+	return ret0
+}
+
+// PizzaHandler indicates an expected call of PizzaHandler
+func (mr *MockHandlerMockRecorder) PizzaHandler() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PizzaHandler", reflect.TypeOf((*MockHandler)(nil).PizzaHandler))
+}
+
+// StatusHandler mocks base method
+func (m *MockHandler) StatusHandler() http.HandlerFunc {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "StatusHandler")
+	ret0, _ := ret[0].(http.HandlerFunc)
+	return ret0
+}
+
+// StatusHandler indicates an expected call of StatusHandler
+func (mr *MockHandlerMockRecorder) StatusHandler() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "StatusHandler", reflect.TypeOf((*MockHandler)(nil).StatusHandler))
+}

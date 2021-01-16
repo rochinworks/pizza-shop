@@ -29,7 +29,6 @@ func Connect() *sql.DB {
 		pgPass := os.Getenv("POSTGRES_PASSWORD")
 		// this string normally comes from the config (environment var)
 		pgDSN := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable host=%s", pgUser, pgPass, pgDBName, pgHost)
-		log.Info("pg dsn: ", pgDSN)
 		// connect to the postgres DB
 		db, err := sql.Open("postgres", pgDSN)
 		if err != nil {

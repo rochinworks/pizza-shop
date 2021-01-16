@@ -17,6 +17,12 @@ func httpRouter(handler Handler) chi.Router {
 
 	// base routes
 	r.Get("/", handler.BaseHandler())
+	// create a user
+	r.Post("/user/create", handler.AddUserHandler())
+	// order a pizza
+	r.Post("/order/start", handler.PizzaHandler())
+	// check the order status
+	r.Get("/order/{userID}/status/{orderID}", handler.StatusHandler())
 
 	return r
 }

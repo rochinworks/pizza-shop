@@ -13,15 +13,3 @@ func (handler *handler) BaseHandler() http.HandlerFunc {
 		json.NewEncoder(w).Encode(map[string]interface{}{"alive": true})
 	}
 }
-
-//    // decode request
-//		json.NewDecoder(r.Body).Decode(&request)
-//		ioutil.ReadAll(r.Body)
-//		defer r.Body.Close()
-//
-//		// Return the response
-//		// set the header
-//		w.Header().Set("Content-Type", "application/json")
-//
-//    // encode response
-//		json.NewEncoder(w).Encode(response)

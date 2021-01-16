@@ -1,8 +1,14 @@
 package pg
 
-// "github.com/google/uuid"
+import "github.com/google/uuid"
 
 type User struct {
-	ID   int
-	Name string
+	ID   uuid.UUID `json:"id"`
+	Name string    `json:"username"`
+}
+
+type Pizza struct {
+	Style  string    `json:"style"`
+	UserID uuid.UUID `json:"userId"`
+	Status string    `json:"status"`
 }

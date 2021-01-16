@@ -2,11 +2,14 @@ package handler_test
 
 import (
 	"encoding/json"
-	. "go-web-api/src/handler"
-
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/golang/mock/gomock"
+
+	. "go-web-api/src/handler"
+	"go-web-api/src/handler/mocks"
 )
 
 func TestBaseHandler(t *testing.T) {
@@ -15,8 +18,14 @@ func TestBaseHandler(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	// mock the repository for testing
+	mockCtrl := gomock.NewController(t)
+	defer mockCtrl.Finish()
+
+	mockRepo := mocks.NewMockRepository(mockCtrl)
+
 	rr := httptest.NewRecorder()
-	h := NewHandler()
+	h := NewHandler(mockRepo)
 	handler := http.HandlerFunc(h.BaseHandler())
 
 	handler.ServeHTTP(rr, req)

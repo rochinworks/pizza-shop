@@ -10,4 +10,7 @@ import (
 //go:generate mockgen -source=handlerinterface.go -destination=mocks/handlerinterface.go -package=mocks
 type Handler interface {
 	BaseHandler() http.HandlerFunc
+	AddUserHandler() http.HandlerFunc
+	PizzaHandler() http.HandlerFunc
+	StatusHandler() http.HandlerFunc
 }

@@ -29,8 +29,17 @@ func HandleMigrations(pg *sql.DB) error {
 		return err
 	}
 
-	if err = m.Up(); err != nil {
+	if err = m.Up(); err != nil && err != migrate.ErrNoChange {
 		log.Error("an error occurred with migrations: ", err)
+	} else if err == migrate.ErrNoChange {
+		log.Info("no migration needed, moving on")
+	} else {
+		nversion, _, err := m.Version()
+		if err != nil {
+			log.Error(err)
+			return err
+		}
+		log.Infof("migrated PG DB from version %d to version %d", version, nversion)
 	}
 	//	if err := m.Down(); err != nil {
 	//		log.Error("an error occurred with migrations3: ", err)
@@ -41,14 +50,6 @@ func HandleMigrations(pg *sql.DB) error {
 	//	log.Error(err)
 	//	return err
 	//}
-
-	nversion, _, err := m.Version()
-	if err != nil {
-		log.Error(err)
-		return err
-	}
-
-	log.Infof("migrated PG DB from version %d to version %d", version, nversion)
 
 	return nil
 }

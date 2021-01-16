@@ -17,12 +17,12 @@ func main() {
 	// migrate
 	pg.HandleMigrations(pgdb)
 	// inject
-
+	repo := pg.NewRepository(pgdb)
 	// ========================================
 	// start server with middleware
 	// ========================================
 
-	h := handler.NewHandler() // eventually connect the db here
+	h := handler.NewHandler(repo) // eventually connect the db here
 	r := httpRouter(h)
 
 	server := &http.Server{
