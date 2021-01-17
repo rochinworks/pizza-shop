@@ -26,7 +26,8 @@ func TestStatusHandler(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	req, err := http.NewRequest("GET", fmt.Sprintf("/order/%s/status/%s", uID, oID), nil)
+	url := fmt.Sprintf("/order/status?userId=%s&orderId=%s", uID, oID)
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -65,5 +66,9 @@ func TestStatusHandler(t *testing.T) {
 
 	if actual == nil {
 		t.Error("no response")
+	}
+
+	if actual["status"] == "" {
+		t.Error("status should not be nil")
 	}
 }

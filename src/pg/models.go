@@ -8,7 +8,8 @@ type User struct {
 }
 
 type Pizza struct {
-	Style  string    `json:"style"`
-	UserID uuid.UUID `json:"userId"`
-	Status string    `json:"status"`
+	OrderID uuid.UUID `json:"orderId"`
+	Style   string    `json:"style"`
+	UserID  uuid.UUID `json:"userId"`
+	Status  string    `json:"status"`
 }

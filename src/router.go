@@ -22,7 +22,7 @@ func httpRouter(handler Handler) chi.Router {
 	// order a pizza
 	r.Post("/order/start", handler.PizzaHandler())
 	// check the order status
-	r.Get("/order/{userID}/status/{orderID}", handler.StatusHandler())
+	r.Get("/order/status?userId={userId}&orderId={orderId}", handler.StatusHandler())
 
 	return r
 }

@@ -32,7 +32,7 @@ func (r repository) Store(ctx context.Context, user User) (*uuid.UUID, error) {
 		user.Name,
 	)
 	if err != nil {
-		log.Error("Error while storing model")
+		log.Error("Error while storing user")
 		return nil, err
 	}
 
@@ -42,7 +42,7 @@ func (r repository) Store(ctx context.Context, user User) (*uuid.UUID, error) {
 func (r repository) StoreOrder(ctx context.Context, pizza Pizza) (*uuid.UUID, error) {
 	id := uuid.New()
 
-	query := `INSERT INTO orders (id, style, satus, userId) VALUES ($1, $2, $3, $4)`
+	query := `INSERT INTO orders (id, style, status, userId) VALUES ($1, $2, $3, $4)`
 	_, err := r.db.ExecContext(
 		ctx,
 		query,
@@ -52,7 +52,7 @@ func (r repository) StoreOrder(ctx context.Context, pizza Pizza) (*uuid.UUID, er
 		pizza.UserID,
 	)
 	if err != nil {
-		log.Error("Error while storing model")
+		log.Error("Error while storing order")
 		return nil, err
 	}
 
@@ -60,5 +60,24 @@ func (r repository) StoreOrder(ctx context.Context, pizza Pizza) (*uuid.UUID, er
 }
 
 func (r repository) GetStatus(ctx context.Context, userID uuid.UUID, orderID uuid.UUID) (string, error) {
-	return "", nil
+	query := `SELECT * FROM orders WHERE id = $1 AND userid = $2`
+	rows, err := r.db.QueryContext(
+		ctx,
+		query,
+		orderID,
+		userID,
+	)
+	if err != nil {
+		log.Error("Error while getting status")
+		return "", err
+	}
+	var order Pizza
+	for rows.Next() {
+		err = rows.Scan(&order.OrderID, &order.Style, &order.Status, &order.UserID)
+		if err != nil {
+			return "", err
+		}
+	}
+
+	return order.Status, nil
 }
