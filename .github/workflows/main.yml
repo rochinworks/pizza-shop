@@ -18,7 +18,6 @@ jobs:
           usedocker: true
           docker_build_args: |
             ENV
-            DATABASE_URL
 
         env:
           ENV: "production"
