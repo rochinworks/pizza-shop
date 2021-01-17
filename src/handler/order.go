@@ -44,6 +44,8 @@ func (handler *handler) PizzaHandler() http.HandlerFunc {
 			w.Write([]byte(fmt.Sprintf("error: %v", err)))
 		}
 
+		// start async pizza processing
+
 		response := map[string]interface{}{
 			"orderId": orderID,
 			"status":  pizza.Status,

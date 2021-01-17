@@ -1,7 +1,11 @@
 DOCKER=docker
 DOCKER_COMPOSE=docker-compose
 
-default: start
+default: build
+
+build:
+	docker build -t pizza-shop .
+	docker run -it pizza-shop
 
 # starts the application in watch mode
 start:
@@ -9,6 +13,5 @@ start:
 	$(DOCKER_COMPOSE) exec app gin -i --path=src --bin=app
 
 start-dev:
-	$(DOCKER_COMPOSE) -f ./build/docker-compose.yml up -d
-	cd ../src ;\
+	$(DOCKER_COMPOSE) docker-compose.yml up -d
 	HOST="localhost" gin -i run src/*.go
