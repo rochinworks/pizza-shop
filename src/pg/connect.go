@@ -17,18 +17,26 @@ func Connect() *sql.DB {
 		log.Error("error getting working directory: ", err)
 	}
 
-	err = godotenv.Load(fmt.Sprint(wd, "/../.env"))
-	if err != nil {
-		log.Error("an error occurred loading the env file: ", err)
+	if os.Getenv("ENV") != "production" {
+		err = godotenv.Load(fmt.Sprint(wd, "/../.env"))
+		if err != nil {
+			log.Error("an error occurred loading the env file: ", err)
+		}
 	}
 
 	go func() {
-		pgHost := os.Getenv("POSTGRES_HOST")
-		pgUser := os.Getenv("POSTGRES_USER")
-		pgDBName := os.Getenv("POSTGRES_DB")
-		pgPass := os.Getenv("POSTGRES_PASSWORD")
-		// this string normally comes from the config (environment var)
-		pgDSN := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable host=%s", pgUser, pgPass, pgDBName, pgHost)
+		env := os.Getenv("ENV")
+		var psDSN string
+		if env != "production" {
+			pgHost := os.Getenv("POSTGRES_HOST")
+			pgUser := os.Getenv("POSTGRES_USER")
+			pgDBName := os.Getenv("POSTGRES_DB")
+			pgPass := os.Getenv("POSTGRES_PASSWORD")
+			// this string normally comes from the config (environment var)
+			pgDSN = fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable host=%s", pgUser, pgPass, pgDBName, pgHost)
+		} else {
+			pgDSN = os.Getenv("DATABASE_URL")
+		}
 		// connect to the postgres DB
 		db, err := sql.Open("postgres", pgDSN)
 		if err != nil {

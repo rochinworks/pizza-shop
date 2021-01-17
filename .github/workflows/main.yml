@@ -14,16 +14,12 @@ jobs:
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: pizza-shop123 #Must be unique in Heroku
-          heroku_email: ${{secrets.HEROKU_API_KEY}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
           usedocker: true
           docker_build_args: |
-            POSTGRES_USER
-            POSTGRES_PASSWORD
-            POSTGRES_HOST
-            POSTGRES_DB
+            ENV
+            DATABSE_URL
 
         env:
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          ENV: "production"
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
