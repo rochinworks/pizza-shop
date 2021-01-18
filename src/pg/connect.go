@@ -34,7 +34,6 @@ func Connect() *sql.DB {
 			pgPass := os.Getenv("POSTGRES_PASSWORD")
 			// this string normally comes from the config (environment var)
 			pgDSN := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable host=%s", pgUser, pgPass, pgDBName, pgHost)
-			log.Info("postgres connection string: ", pgDSN)
 
 			// connect to the postgres DB
 			db, err = sql.Open("postgres", pgDSN)
@@ -42,7 +41,6 @@ func Connect() *sql.DB {
 				log.Fatal(fmt.Errorf("error connecting to postgres %+v", err))
 			}
 		} else {
-			log.Info("postgres connection string: ", os.Getenv("DATABASE_URL"))
 			db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
 			if err != nil {
 				log.Fatal(fmt.Errorf("error connecting to postgres %+v", err))
