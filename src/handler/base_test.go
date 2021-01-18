@@ -36,7 +36,7 @@ func TestBaseHandler(t *testing.T) {
 
 	expected := map[string]interface{}{"alive": true}
 	var actual map[string]interface{}
-	err = json.Unmarshal([]byte(rr.Body.String()), &actual)
+	err = json.Unmarshal(rr.Body.Bytes(), &actual)
 	if err != nil {
 		t.Error("json did not unmarshal correctly")
 	}

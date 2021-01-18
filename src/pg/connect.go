@@ -17,7 +17,7 @@ func Connect() *sql.DB {
 		log.Error("error getting working directory: ", err)
 	}
 
-	if os.Getenv("ENV") == "local" {
+	if os.Getenv("ENV") != "production" {
 		err = godotenv.Load(fmt.Sprint(wd, "/../.env"))
 		if err != nil {
 			log.Error("an error occurred loading the env file: ", err)
@@ -34,6 +34,7 @@ func Connect() *sql.DB {
 			pgPass := os.Getenv("POSTGRES_PASSWORD")
 			// this string normally comes from the config (environment var)
 			pgDSN := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable host=%s", pgUser, pgPass, pgDBName, pgHost)
+			log.Info("postgres connection string: ", pgDSN)
 
 			// connect to the postgres DB
 			db, err = sql.Open("postgres", pgDSN)

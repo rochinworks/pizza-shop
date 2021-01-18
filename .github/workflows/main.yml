@@ -12,11 +12,6 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: lint
-        uses: golangci/golangci-lint-action@v2
-        with:
-          version: v1.29
-
       - name: test
         run: make test
 
