@@ -18,8 +18,14 @@ jobs:
           usedocker: true
           docker_build_args: |
             ENV
-            DATABASE_URL
+            POSTGRES_HOST
+            POSTGRES_USER
+            POSTGRES_DB
+            POSTGRES_PASSWORD
 
         env:
           ENV: "production"
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
