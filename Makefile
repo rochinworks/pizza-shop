@@ -9,7 +9,6 @@ build:
 
 test: 
 	go vet ./... &&\
-	golint ./... &&\
 	go test ./...
 
 # starts the application in watch mode

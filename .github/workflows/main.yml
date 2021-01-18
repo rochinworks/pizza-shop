@@ -12,14 +12,19 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
+      - name: lint
+        uses: golangci/golangci-lint-action@v2
+        with:
+          version: v1.29
+
       - name: test
         run: make test
 
       - name: deploy
-        uses: akhileshns/heroku-deploy@v3.8.9 # This is the action
+        uses: akhileshns/heroku-deploy@v3.8.9
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: pizza-shop123 #Must be unique in Heroku
+          heroku_app_name: pizza-shop123
           heroku_email: ${{secrets.HEROKU_EMAIL}}
           usedocker: true
           docker_build_args: |
