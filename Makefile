@@ -1,11 +1,7 @@
-DOCKER=docker
-DOCKER_COMPOSE=docker-compose
-
 default: build
 
 build:
 	docker build -t pizza-shop .
-	docker run -it pizza-shop
 
 test: 
 	go vet ./... &&\
@@ -13,9 +9,9 @@ test:
 
 # starts the application in watch mode
 start:
-	$(DOCKER_COMPOSE) up -d --build
-	$(DOCKER_COMPOSE) exec app gin -i --path=src --bin=app
+	docker-compose up -d --build
+	docker-compose exec app gin -i --path=src --bin=app
 
 start-dev:
-	$(DOCKER_COMPOSE) docker-compose.yml up -d
+	docker-compose docker-compose.yml up -d
 	HOST="localhost" gin -i run src/*.go

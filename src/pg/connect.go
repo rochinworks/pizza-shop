@@ -17,7 +17,7 @@ func Connect() *sql.DB {
 		log.Error("error getting working directory: ", err)
 	}
 
-	if os.Getenv("ENV") != "production" {
+	if os.Getenv("ENV") != "production" && os.Getenv("DOCKER") != "true" {
 		err = godotenv.Load(fmt.Sprint(wd, "/../.env"))
 		if err != nil {
 			log.Error("an error occurred loading the env file: ", err)
@@ -42,6 +42,7 @@ func Connect() *sql.DB {
 				log.Fatal(fmt.Errorf("error connecting to postgres %+v", err))
 			}
 		} else {
+			log.Info("postgres connection string: ", os.Getenv("DATABASE_URL"))
 			db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
 			if err != nil {
 				log.Fatal(fmt.Errorf("error connecting to postgres %+v", err))

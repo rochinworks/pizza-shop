@@ -10,7 +10,7 @@ services:
     environment:
       PG_HOST: db
     ports:
-      - 5003:5003
+      - 8080:8080
     depends_on:
       - db
     links:

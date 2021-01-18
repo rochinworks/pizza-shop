@@ -14,6 +14,7 @@ COPY go.sum .
 RUN go mod download
 
 # Copy source as late in the process as possible (to speed up local builds)
+COPY src/pg/migrations ./pg/migrations
 COPY . .
 
 #################
@@ -22,6 +23,7 @@ COPY . .
 FROM base AS builder
 WORKDIR /app
 COPY --from=base /app .
+COPY --from=base /app/pg/migrations .
 RUN GOOS=linux GOARCH=386\
 				go build -v\
 				-o app\
@@ -32,5 +34,6 @@ RUN GOOS=linux GOARCH=386\
 #################
 FROM alpine:3.7
 WORKDIR /app
+COPY --from=builder /app/pg/migrations .
 COPY --from=builder /app/app .
 CMD [ "./app"]
