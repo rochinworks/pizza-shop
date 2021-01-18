@@ -23,7 +23,7 @@ COPY . .
 FROM base AS builder
 WORKDIR /app
 COPY --from=base /app .
-COPY --from=base /app/pg/migrations .
+COPY --from=base /app/pg/migrations /app/pg/migrations
 RUN GOOS=linux GOARCH=386\
 				go build -v\
 				-o app\
@@ -34,6 +34,6 @@ RUN GOOS=linux GOARCH=386\
 #################
 FROM alpine:3.7
 WORKDIR /app
-COPY --from=builder /app/pg/migrations .
+COPY --from=builder /app/pg/migrations /app/pg/migrations
 COPY --from=builder /app/app .
 CMD [ "./app"]
