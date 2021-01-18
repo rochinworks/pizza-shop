@@ -25,17 +25,26 @@ func Connect() *sql.DB {
 	}
 
 	go func() {
-		pgHost := os.Getenv("POSTGRES_HOST")
-		pgUser := os.Getenv("POSTGRES_USER")
-		pgDBName := os.Getenv("POSTGRES_DB")
-		pgPass := os.Getenv("POSTGRES_PASSWORD")
-		// this string normally comes from the config (environment var)
-		pgDSN := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable host=%s", pgUser, pgPass, pgDBName, pgHost)
+		var db *sql.DB
 
-		// connect to the postgres DB
-		db, err := sql.Open("postgres", pgDSN)
-		if err != nil {
-			log.Fatal(fmt.Errorf("error connecting to postgres %+v", err))
+		if os.Getenv("ENV") == "local" {
+			pgHost := os.Getenv("POSTGRES_HOST")
+			pgUser := os.Getenv("POSTGRES_USER")
+			pgDBName := os.Getenv("POSTGRES_DB")
+			pgPass := os.Getenv("POSTGRES_PASSWORD")
+			// this string normally comes from the config (environment var)
+			pgDSN := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable host=%s", pgUser, pgPass, pgDBName, pgHost)
+
+			// connect to the postgres DB
+			db, err = sql.Open("postgres", pgDSN)
+			if err != nil {
+				log.Fatal(fmt.Errorf("error connecting to postgres %+v", err))
+			}
+		} else {
+			db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
+			if err != nil {
+				log.Fatal(fmt.Errorf("error connecting to postgres %+v", err))
+			}
 		}
 
 		// Ping the db to make sure we connected properly

@@ -9,8 +9,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.8.9 # This is the action
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: test
+        run: make test
+
+      - name: deploy
+        uses: akhileshns/heroku-deploy@v3.8.9 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: pizza-shop123 #Must be unique in Heroku
